@@ -16,7 +16,12 @@ import urllib.request
 
 DATA_FILE = Path(__file__).parent / "data.json"
 
-HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; VenchiPunPsvBot/1.0)"}
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "it-IT,it;q=0.9,en;q=0.8",
+}
 
 MESI = ["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio",
         "agosto","settembre","ottobre","novembre","dicembre"]
@@ -25,8 +30,11 @@ MESI_BREVI = ["Gen","Feb","Mar","Apr","Mag","Giu","Lug","Ago","Set","Ott","Nov",
 
 def fetch(url):
     req = urllib.request.Request(url, headers=HEADERS)
-    with urllib.request.urlopen(req, timeout=20) as r:
-        return r.read().decode("utf-8", errors="ignore")
+    with urllib.request.urlopen(req, timeout=25) as r:
+        status = r.status
+        html = r.read().decode("utf-8", errors="ignore")
+        print(f"[fetch] {url} -> status {status}, {len(html)} caratteri ricevuti", file=sys.stderr)
+        return html
 
 
 def strip_tags(html):
@@ -47,8 +55,29 @@ def scrape_pun():
     html = fetch("https://quifinanza.it/osservatorio-prezzi/prezzo-pun-luce-oggi/919954/")
     text = strip_tags(html)
 
-    m_oggi = re.search(r"si attesta a\s*([\d.,]+)\s*€/kWh", text)
-    m_mensile = re.search(r"valore medio mensile di[^(]*\(([\d.,]+)\s*€/kWh\)", text)
+    # Pattern principale + un paio di varianti di riserva, nel caso la pagina
+    # cambi leggermente la formulazione da un giorno all'altro.
+    patterns_oggi = [
+        r"si attesta a\s*([\d.,]+)\s*€/kWh",
+        r"valore medio giornaliero[^.]*?([\d.,]+)\s*€/kWh",
+        r"[Oo]ggi[^.]*?([\d.,]+)\s*€/kWh",
+    ]
+    patterns_mensile = [
+        r"valore medio mensile di[^(]*\(([\d.,]+)\s*€/kWh\)",
+        r"media mensile[^.]*?([\d.,]+)\s*€/kWh",
+    ]
+
+    m_oggi = next((m for p in patterns_oggi if (m := re.search(p, text))), None)
+    m_mensile = next((m for p in patterns_mensile if (m := re.search(p, text))), None)
+
+    print(f"[scrape_pun] pattern oggi trovato: {bool(m_oggi)} | pattern mensile trovato: {bool(m_mensile)}", file=sys.stderr)
+    if not m_oggi or not m_mensile:
+        # Stampiamo un pezzo di testo intorno a "€/kWh" per capire cosa dice davvero la pagina
+        snippet_idx = text.find("€/kWh")
+        if snippet_idx > -1:
+            print("[scrape_pun] contesto attorno a '€/kWh':", text[max(0, snippet_idx-120):snippet_idx+40], file=sys.stderr)
+        else:
+            print("[scrape_pun] '€/kWh' non trovato affatto nel testo della pagina (possibile blocco anti-bot).", file=sys.stderr)
 
     oggi = to_float(m_oggi.group(1)) if m_oggi else None
     mensile = to_float(m_mensile.group(1)) if m_mensile else None
@@ -62,6 +91,8 @@ def scrape_psv():
 
     m_oggi = re.search(r"PSV è pari a\s*([\d.,]+)\s*€/Smc", text)
     m_mensile = re.search(r"media mensile di\s*([\d.,]+)\s*€/Smc", text)
+
+    print(f"[scrape_psv] pattern oggi trovato: {bool(m_oggi)} | pattern mensile trovato: {bool(m_mensile)}", file=sys.stderr)
 
     oggi = to_float(m_oggi.group(1)) if m_oggi else None
     mensile = to_float(m_mensile.group(1)) if m_mensile else None
