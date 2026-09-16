@@ -1,0 +1,31 @@
+name: Aggiorna PUN e PSV
+
+on:
+  schedule:
+    # Ogni giorno alle 7:30 (ora italiana in inverno; 8:30 in estate, va bene comunque)
+    - cron: "30 6 * * *"
+  workflow_dispatch: {}   # permette di lanciarlo anche a mano dal tab "Actions"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Esegui lo scraper
+        run: python scrape.py
+
+      - name: Pubblica se ci sono cambiamenti
+        run: |
+          git config user.name "pun-psv-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Aggiorna PUN/PSV $(date +'%Y-%m-%d')"
+          git push
