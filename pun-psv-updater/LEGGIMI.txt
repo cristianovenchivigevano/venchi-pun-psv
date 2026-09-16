@@ -1,0 +1,53 @@
+COME ATTIVARE L'AGGIORNAMENTO AUTOMATICO DI PUN E PSV
+========================================================
+
+Questo pacchetto fa aggiornare da solo, ogni giorno, i valori PUN e PSV
+mostrati sul sito. Usa GitHub (gratuito) per eseguire lo script e
+pubblicare i dati: non serve nessun server a pagamento.
+
+Cosa contiene:
+- scrape.py            → lo script che va a leggere i valori aggiornati
+- data.json             → il file con i dati (creato/aggiornato automaticamente)
+- .github/workflows/update.yml → l'automazione che esegue lo script ogni giorno
+
+PASSAGGI (circa 10 minuti, una tantum)
+----------------------------------------
+1. Vai su github.com e crea un account gratuito (se non ce l'hai già).
+
+2. Crea un nuovo repository pubblico, ad esempio chiamato:
+   venchi-pun-psv
+
+3. Carica dentro tutti i file di questa cartella (mantenendo la struttura
+   delle cartelle, compresa .github/workflows/update.yml). Puoi trascinarli
+   nella pagina "Add file > Upload files" di GitHub.
+
+4. Vai su Settings > Pages del repository, e in "Source" scegli
+   "Deploy from a branch", branch "main", cartella "/ (root)". Salva.
+   Dopo un paio di minuti GitHub ti darà un indirizzo tipo:
+   https://TUONOME.github.io/venchi-pun-psv/
+
+5. Vai sul tab "Actions" del repository, apri il workflow
+   "Aggiorna PUN e PSV" e clicca "Run workflow" per lanciarlo la prima
+   volta manualmente. Dopo circa un minuto dovresti vedere data.json
+   aggiornato nel repository.
+
+6. Apri il file index.html del sito, cerca la riga:
+   var DATA_URL = "https://REPLACE-WITH-YOUR-GITHUB-USERNAME.github.io/venchi-pun-psv/data.json";
+   e sostituiscila con il tuo indirizzo GitHub Pages del punto 4, ad
+   esempio:
+   var DATA_URL = "https://tuonome.github.io/venchi-pun-psv/data.json";
+
+7. Ricarica il sito: i valori PUN/PSV ora si aggiornano da soli ogni
+   giorno, senza bisogno del tuo intervento.
+
+NOTE IMPORTANTI
+----------------------------------------
+- Lo script legge i valori da due pagine pubbliche (quifinanza.it e
+  bolletta-energia.it) che elaborano i dati ufficiali del GME. Se in
+  futuro una di queste pagine cambia formato, lo script mantiene
+  automaticamente l'ultimo valore valido invece di rompersi: in quel
+  caso scrivimi (a Claude) e aggiorno lo script.
+- Finché non completi questi passaggi, il sito mostra comunque i
+  valori più recenti che ti ho fornito io, quindi non resta mai vuoto.
+- Tutto questo è gratuito: GitHub Actions e GitHub Pages non hanno
+  costi per un uso come questo.
