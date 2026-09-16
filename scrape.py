@@ -10,6 +10,7 @@ sovrascriverlo con un dato mancante o rotto.
 import json
 import re
 import sys
+import html
 from datetime import datetime
 from pathlib import Path
 import urllib.request
@@ -37,11 +38,11 @@ def fetch(url):
         return html
 
 
-def strip_tags(html):
-    text = re.sub(r"<script.*?</script>", " ", html, flags=re.S | re.I)
+def strip_tags(html_text):
+    text = re.sub(r"<script.*?</script>", " ", html_text, flags=re.S | re.I)
     text = re.sub(r"<style.*?</style>", " ", text, flags=re.S | re.I)
     text = re.sub(r"<[^>]+>", " ", text)
-    text = re.sub(r"&nbsp;", " ", text)
+    text = html.unescape(text)  # decodifica &#8217; -> ' , &agrave; -> à , &nbsp; -> spazio, ecc.
     text = re.sub(r"\s+", " ", text)
     return text
 
@@ -53,10 +54,10 @@ def to_float(s):
 def scrape_pun():
     """Ritorna (oggi, mensile) in EUR/kWh da A4Energie.it: dato PUN grezzo GME,
     senza oneri, trasporto o IVA (coerente con l'originale del sito)."""
-    html = fetch("https://www.a4energie.it/pun-luce-e-psv-gas-prezzi-allingrosso-aggiornati/")
-    text = strip_tags(html)
+    raw = fetch("https://www.a4energie.it/pun-luce-e-psv-gas-prezzi-allingrosso-aggiornati/")
+    text = strip_tags(raw)
 
-    m_oggi = re.search(r"prezzo PUN dell.energia elettrica oggi[^€]*?è\s*([\d.,]+)\s*€/kWh", text)
+    m_oggi = re.search(r"oggi,\s*\d{1,2}\s+\w+\s+\d{4},?\s*è\s*([\d.,]+)\s*€/kWh", text)
 
     # "Mensile" = media del mese precedente (completo), non quella parziale del mese in corso.
     now = datetime.now()
@@ -78,8 +79,8 @@ def scrape_pun():
 
 def scrape_psv():
     """Ritorna (oggi, mensile) in EUR/Smc dalla pagina bolletta-energia.it sul PSV."""
-    html = fetch("https://bolletta-energia.it/gas/psv")
-    text = strip_tags(html)
+    raw = fetch("https://bolletta-energia.it/gas/psv")
+    text = strip_tags(raw)
 
     m_oggi = re.search(r"PSV è pari a\s*([\d.,]+)\s*€/Smc", text)
     m_mensile = re.search(r"media mensile di\s*([\d.,]+)\s*€/Smc", text)
