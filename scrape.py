@@ -51,28 +51,20 @@ def to_float(s):
 
 
 def scrape_pun():
-    """Ritorna (oggi, mensile) in EUR/kWh dalla pagina Quifinanza sul PUN."""
-    html = fetch("https://quifinanza.it/osservatorio-prezzi/prezzo-pun-luce-oggi/919954/")
+    """Ritorna (oggi, mensile) in EUR/kWh da A4Energie.it: dato PUN grezzo GME,
+    senza oneri, trasporto o IVA (coerente con l'originale del sito)."""
+    html = fetch("https://www.a4energie.it/pun-luce-e-psv-gas-prezzi-allingrosso-aggiornati/")
     text = strip_tags(html)
 
-    # Pattern principale + un paio di varianti di riserva, nel caso la pagina
-    # cambi leggermente la formulazione da un giorno all'altro.
-    patterns_oggi = [
-        r"si attesta a\s*([\d.,]+)\s*€/kWh",
-        r"valore medio giornaliero[^.]*?([\d.,]+)\s*€/kWh",
-        r"[Oo]ggi[^.]*?([\d.,]+)\s*€/kWh",
-    ]
-    patterns_mensile = [
-        r"valore medio mensile di[^(]*\(([\d.,]+)\s*€/kWh\)",
-        r"media mensile[^.]*?([\d.,]+)\s*€/kWh",
-    ]
+    m_oggi = re.search(r"prezzo PUN dell.energia elettrica oggi[^€]*?è\s*([\d.,]+)\s*€/kWh", text)
 
-    m_oggi = next((m for p in patterns_oggi if (m := re.search(p, text))), None)
-    m_mensile = next((m for p in patterns_mensile if (m := re.search(p, text))), None)
+    # "Mensile" = media del mese precedente (completo), non quella parziale del mese in corso.
+    now = datetime.now()
+    prev_month_name = MESI[(now.month - 2) % 12].capitalize()
+    m_mensile = re.search(rf"{prev_month_name}\s+2\d{{3}}\s*([\d.,]+)", text)
 
-    print(f"[scrape_pun] pattern oggi trovato: {bool(m_oggi)} | pattern mensile trovato: {bool(m_mensile)}", file=sys.stderr)
+    print(f"[scrape_pun] pattern oggi trovato: {bool(m_oggi)} | pattern mensile ({prev_month_name}) trovato: {bool(m_mensile)}", file=sys.stderr)
     if not m_oggi or not m_mensile:
-        # Stampiamo un pezzo di testo intorno a "€/kWh" per capire cosa dice davvero la pagina
         snippet_idx = text.find("€/kWh")
         if snippet_idx > -1:
             print("[scrape_pun] contesto attorno a '€/kWh':", text[max(0, snippet_idx-120):snippet_idx+40], file=sys.stderr)
