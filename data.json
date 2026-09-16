@@ -7,10 +7,10 @@
     "deltaPct": 0.0
   },
   "psv": {
-    "oggi": 0.867,
-    "mensile": 0.832,
-    "deltaAbs": 0.143,
-    "deltaPct": 20.8
+    "oggi": 0.87,
+    "mensile": 0.835,
+    "deltaAbs": 0.146,
+    "deltaPct": 21.2
   },
   "months": [
     {
@@ -56,7 +56,7 @@
     {
       "m": "Set",
       "pun": 0.18,
-      "psv": 0.832
+      "psv": 0.835
     }
   ]
 }
