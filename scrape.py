@@ -133,7 +133,8 @@ def main():
         print("Impossibile ottenere tutti i valori e nessun dato precedente disponibile.", file=sys.stderr)
         sys.exit(1)
 
-    # Gestione dello storico mensile: aggiorna il mese corrente nell'array
+    # Gestione dello storico mensile: aggiorniamo la voce del MESE PRECEDENTE
+    # (non il mese in corso, che è ancora parziale e non deve entrare nello storico).
     months = prev.get("months") or [
         {"m": "Gen", "pun": 0.133, "psv": 0.404},
         {"m": "Feb", "pun": 0.114, "psv": 0.373},
@@ -144,13 +145,13 @@ def main():
         {"m": "Lug", "pun": 0.157, "psv": 0.606},
         {"m": "Ago", "pun": 0.180, "psv": 0.689},
     ]
-    current_label = MESI_BREVI[today.month - 1]
-    if months and months[-1]["m"] == current_label:
-        months[-1] = {"m": current_label, "pun": round(pun_mensile, 3), "psv": round(psv_mensile, 3)}
+    mese_precedente_label = MESI_BREVI[(today.month - 2) % 12]
+    if months and months[-1]["m"] == mese_precedente_label:
+        months[-1] = {"m": mese_precedente_label, "pun": round(pun_mensile, 3), "psv": round(psv_mensile, 3)}
     elif len(months) < 12:
-        months.append({"m": current_label, "pun": round(pun_mensile, 3), "psv": round(psv_mensile, 3)})
+        months.append({"m": mese_precedente_label, "pun": round(pun_mensile, 3), "psv": round(psv_mensile, 3)})
     else:
-        months = months[1:] + [{"m": current_label, "pun": round(pun_mensile, 3), "psv": round(psv_mensile, 3)}]
+        months = months[1:] + [{"m": mese_precedente_label, "pun": round(pun_mensile, 3), "psv": round(psv_mensile, 3)}]
 
     # Variazione % rispetto al mese precedente nello storico
     def pct_change(vals, key):
