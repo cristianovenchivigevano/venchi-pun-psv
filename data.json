@@ -9,8 +9,8 @@
   "psv": {
     "oggi": 0.87,
     "mensile": 0.835,
-    "deltaAbs": 0.146,
-    "deltaPct": 21.2
+    "deltaAbs": 0.0,
+    "deltaPct": 0.0
   },
   "months": [
     {
@@ -55,6 +55,11 @@
     },
     {
       "m": "Set",
+      "pun": 0.18,
+      "psv": 0.835
+    },
+    {
+      "m": "Ago",
       "pun": 0.18,
       "psv": 0.835
     }
