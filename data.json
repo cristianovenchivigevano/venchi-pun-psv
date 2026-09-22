@@ -1,16 +1,16 @@
 {
-  "updated": "21/09/2026",
+  "updated": "22/09/2026",
   "pun": {
-    "oggi": 0.22423,
+    "oggi": 0.21525,
     "mensile": 0.18,
     "deltaAbs": 0.023,
     "deltaPct": 14.6
   },
   "psv": {
-    "oggi": 0.862,
-    "mensile": 0.838,
-    "deltaAbs": 0.232,
-    "deltaPct": 38.3
+    "oggi": 0.818,
+    "mensile": 0.837,
+    "deltaAbs": 0.231,
+    "deltaPct": 38.1
   },
   "months": [
     {
@@ -51,7 +51,7 @@
     {
       "m": "Ago",
       "pun": 0.18,
-      "psv": 0.838
+      "psv": 0.837
     }
   ]
 }
