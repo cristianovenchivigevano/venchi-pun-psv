@@ -82,10 +82,19 @@ def scrape_psv():
     raw = fetch("https://bolletta-energia.it/gas/psv")
     text = strip_tags(raw)
 
-    m_oggi = re.search(r"PSV è pari a\s*([\d.,]+)\s*€/Smc", text)
-    m_mensile = re.search(r"media mensile di\s*([\d.,]+)\s*€/Smc", text)
+    m_oggi = (re.search(r"PSV è pari a\s*([\d.,]+)\s*€/Smc", text)
+              or re.search(r"valore giornaliero è\s*([\d.,]+)\s*€/Smc", text)
+              or re.search(r"valore odierno è\s*([\d.,]+)\s*€/Smc", text))
 
-    print(f"[scrape_psv] pattern oggi trovato: {bool(m_oggi)} | pattern mensile trovato: {bool(m_mensile)}", file=sys.stderr)
+    # "Mensile" = media del mese precedente (completo), letta dalla tabella
+    # "Media mensile PSV ultimi 12 mesi" (es. "Agosto 2026 0,692 €/Smc").
+    # NON usare la "media mensile" del mese in corso: e' parziale e finirebbe
+    # nello storico al posto del mese precedente (coerente con scrape_pun).
+    now = datetime.now()
+    prev_month_name = MESI[(now.month - 2) % 12].capitalize()
+    m_mensile = re.search(rf"{prev_month_name}\s+2\d{{3}}\s*([\d.,]+)\s*€/Smc", text)
+
+    print(f"[scrape_psv] pattern oggi trovato: {bool(m_oggi)} | pattern mensile ({prev_month_name}) trovato: {bool(m_mensile)}", file=sys.stderr)
 
     oggi = to_float(m_oggi.group(1)) if m_oggi else None
     mensile = to_float(m_mensile.group(1)) if m_mensile else None
