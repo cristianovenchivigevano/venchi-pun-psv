@@ -1,0 +1,44 @@
+{
+  "offerte": [
+    {
+      "attiva": true,
+      "tipo": "luce",
+      "etichetta": "Offerta a tempo",
+      "titolo": "Luce a prezzo fisso",
+      "clienti": "Per i clienti domestici",
+      "prezzo": "0,137",
+      "unita": "€/kWh",
+      "scadenza": "2026-09-30",
+      "durata": "",
+      "fornitore": "",
+      "dettagli": [
+        "Prezzo della componente energia bloccato: niente sorprese se il PUN sale",
+        "Attivazione e cambio fornitore gestiti da noi in negozio",
+        "Nessuna interruzione della fornitura"
+      ],
+      "confronto_pun": true,
+      "banner": "Solo fino al 30/09: prezzo fisso luce 0,137 €/kWh e gas 0,576 €/Smc per le famiglie",
+      "nota": "Offerta per clienti domestici valida per sottoscrizioni entro il 30/09/2026. Il prezzo si riferisce alla sola componente energia ed è al netto di IVA e imposte; sono esclusi spesa per il trasporto e la gestione del contatore, oneri di sistema e quota fissa di commercializzazione. Condizioni complete e scheda sintetica disponibili in negozio."
+    },
+    {
+      "attiva": true,
+      "tipo": "gas",
+      "etichetta": "Offerta a tempo",
+      "titolo": "Gas a prezzo fisso",
+      "clienti": "Per i clienti domestici",
+      "prezzo": "0,576",
+      "unita": "€/Smc",
+      "scadenza": "2026-09-30",
+      "durata": "",
+      "fornitore": "",
+      "dettagli": [
+        "Prezzo della materia prima gas bloccato: niente sorprese se il PSV sale",
+        "Attivazione e cambio fornitore gestiti da noi in negozio",
+        "Nessuna interruzione della fornitura"
+      ],
+      "confronto_psv": true,
+      "banner": "",
+      "nota": "Offerta per clienti domestici valida per sottoscrizioni entro il 30/09/2026. Il prezzo si riferisce alla sola componente materia prima gas ed è al netto di IVA e imposte; sono esclusi spesa per il trasporto e la gestione del contatore, oneri di sistema e quota fissa di commercializzazione. Condizioni complete e scheda sintetica disponibili in negozio."
+    }
+  ]
+}
