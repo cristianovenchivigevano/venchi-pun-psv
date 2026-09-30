@@ -78,11 +78,22 @@ def scrape_pun():
 
 
 def scrape_psv():
-    """Ritorna (oggi, mensile) in EUR/Smc dalla pagina bolletta-energia.it sul PSV."""
+    """Ritorna (oggi, mensile) in EUR/Smc.
+    - oggi: da A4Energie.it (stessa fonte del PUN, 5 decimali, aggiornata ogni giorno);
+      se non si trova, ripiego su bolletta-energia.it.
+    - mensile: media del mese precedente dalla tabella di bolletta-energia.it."""
+    m_a4 = None
+    try:
+        text_a4 = strip_tags(fetch("https://www.a4energie.it/pun-luce-e-psv-gas-prezzi-allingrosso-aggiornati/"))
+        m_a4 = re.search(r"PSV del gas naturale oggi,\s*\d{1,2}\s+\w+\s+\d{4},?\s*è\s*([\d.,]+)\s*€/Smc", text_a4)
+        print(f"[scrape_psv] valore di oggi su A4Energie trovato: {bool(m_a4)}", file=sys.stderr)
+    except Exception as e:
+        print("[scrape_psv] A4Energie non raggiungibile:", e, file=sys.stderr)
+
     raw = fetch("https://bolletta-energia.it/gas/psv")
     text = strip_tags(raw)
 
-    m_oggi = (re.search(r"PSV è pari a\s*([\d.,]+)\s*€/Smc", text)
+    m_oggi = m_a4 or (re.search(r"PSV è pari a\s*([\d.,]+)\s*€/Smc", text)
               or re.search(r"valore giornaliero è\s*([\d.,]+)\s*€/Smc", text)
               or re.search(r"valore odierno è\s*([\d.,]+)\s*€/Smc", text))
 
