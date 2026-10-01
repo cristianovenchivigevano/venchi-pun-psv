@@ -1,16 +1,16 @@
 {
-  "updated": "30/09/2026",
+  "updated": "01/10/2026",
   "pun": {
-    "oggi": 0.20196,
-    "mensile": 0.18,
-    "deltaAbs": 0.023,
-    "deltaPct": 14.6
+    "oggi": 0.20995,
+    "mensile": 0.10908,
+    "deltaAbs": -0.071,
+    "deltaPct": -39.4
   },
   "psv": {
-    "oggi": 0.76316,
-    "mensile": 0.692,
-    "deltaAbs": 0.086,
-    "deltaPct": 14.2
+    "oggi": 0.80232,
+    "mensile": 0.821,
+    "deltaAbs": 0.129,
+    "deltaPct": 18.6
   },
   "months": [
     {
@@ -52,6 +52,11 @@
       "m": "Ago",
       "pun": 0.18,
       "psv": 0.692
+    },
+    {
+      "m": "Set",
+      "pun": 0.109,
+      "psv": 0.821
     }
   ]
 }
