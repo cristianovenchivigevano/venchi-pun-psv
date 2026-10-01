@@ -2,9 +2,9 @@
   "updated": "01/10/2026",
   "pun": {
     "oggi": 0.20995,
-    "mensile": 0.10908,
-    "deltaAbs": -0.071,
-    "deltaPct": -39.4
+    "mensile": 0.20754,
+    "deltaAbs": 0.028,
+    "deltaPct": 15.6
   },
   "psv": {
     "oggi": 0.80232,
@@ -55,7 +55,7 @@
     },
     {
       "m": "Set",
-      "pun": 0.109,
+      "pun": 0.208,
       "psv": 0.821
     }
   ]
