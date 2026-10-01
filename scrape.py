@@ -62,7 +62,8 @@ def scrape_pun():
     # "Mensile" = media del mese precedente (completo), non quella parziale del mese in corso.
     now = datetime.now()
     prev_month_name = MESI[(now.month - 2) % 12].capitalize()
-    m_mensile = re.search(rf"{prev_month_name}\s+2\d{{3}}\s*([\d.,]+)", text)
+    prev_year = now.year if now.month > 1 else now.year - 1  # anno del mese precedente (gennaio -> dicembre anno prima)
+    m_mensile = re.search(rf"{prev_month_name}\s+{prev_year}\s*(?:ULTIMO PARZIALE\s*)?([\d.,]+)", text)
 
     print(f"[scrape_pun] pattern oggi trovato: {bool(m_oggi)} | pattern mensile ({prev_month_name}) trovato: {bool(m_mensile)}", file=sys.stderr)
     if not m_oggi or not m_mensile:
@@ -103,7 +104,8 @@ def scrape_psv():
     # nello storico al posto del mese precedente (coerente con scrape_pun).
     now = datetime.now()
     prev_month_name = MESI[(now.month - 2) % 12].capitalize()
-    m_mensile = re.search(rf"{prev_month_name}\s+2\d{{3}}\s*([\d.,]+)\s*€/Smc", text)
+    prev_year = now.year if now.month > 1 else now.year - 1  # anno del mese precedente (gennaio -> dicembre anno prima)
+    m_mensile = re.search(rf"{prev_month_name}\s+{prev_year}\s*([\d.,]+)\s*€/Smc", text)
 
     print(f"[scrape_psv] pattern oggi trovato: {bool(m_oggi)} | pattern mensile ({prev_month_name}) trovato: {bool(m_mensile)}", file=sys.stderr)
 

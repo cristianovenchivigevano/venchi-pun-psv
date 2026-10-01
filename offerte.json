@@ -6,19 +6,23 @@
       "etichetta": "Offerta a tempo",
       "titolo": "Luce a prezzo fisso",
       "clienti": "Per i clienti domestici",
-      "prezzo": "0,137",
+      "prezzo": "0,135",
       "unita": "€/kWh",
-      "scadenza": "2026-09-30",
+      "sconto": "-30%",
+      "sconto_testo": "Oltre il 30% in meno rispetto al prezzo all'ingrosso dell'energia (PUN medio di settembre)",
+      "scadenza": "2026-10-14",
       "durata": "",
       "fornitore": "",
       "dettagli": [
         "Prezzo della componente energia bloccato: niente sorprese se il PUN sale",
-        "Attivazione e cambio fornitore gestiti da noi in negozio",
-        "Nessuna interruzione della fornitura"
+        "Quota di commercializzazione (CCV): 12,00 € al mese",
+        "Fatturazione bimestrale",
+        "Pagamento con addebito su conto corrente (anche di un'altra persona) o bollettino postale",
+        "Cambio fornitore gestito da noi, senza interruzioni della fornitura"
       ],
       "confronto_pun": true,
-      "banner": "Solo fino al 30/09: prezzo fisso luce 0,137 €/kWh e gas 0,576 €/Smc per le famiglie",
-      "nota": "Offerta per clienti domestici valida per sottoscrizioni entro il 30/09/2026. Il prezzo si riferisce alla sola componente energia ed è al netto di IVA e imposte; sono esclusi spesa per il trasporto e la gestione del contatore, oneri di sistema e quota fissa di commercializzazione. Condizioni complete e scheda sintetica disponibili in negozio."
+      "banner": "Fino al 14/10: luce 0,135 €/kWh e gas 0,566 €/Smc a prezzo fisso, -30% sulla materia prima",
+      "nota": "Offerta per clienti domestici con cambio fornitore, disponibile fino al 14/10/2026. Il prezzo si riferisce alla sola componente energia ed è al netto di IVA e imposte; sono esclusi spesa per il trasporto e la gestione del contatore e oneri di sistema. Quota di commercializzazione 12,00 €/mese. Il -30% confronta il prezzo fisso con la media del PUN di settembre 2026 (0,208 €/kWh), prezzo all'ingrosso della materia prima. Condizioni complete e scheda sintetica disponibili in negozio."
     },
     {
       "attiva": true,
@@ -26,19 +30,23 @@
       "etichetta": "Offerta a tempo",
       "titolo": "Gas a prezzo fisso",
       "clienti": "Per i clienti domestici",
-      "prezzo": "0,576",
+      "prezzo": "0,566",
       "unita": "€/Smc",
-      "scadenza": "2026-09-30",
+      "sconto": "-30%",
+      "sconto_testo": "Oltre il 30% in meno rispetto al prezzo all'ingrosso del gas (PSV medio di settembre)",
+      "scadenza": "2026-10-14",
       "durata": "",
       "fornitore": "",
       "dettagli": [
         "Prezzo della materia prima gas bloccato: niente sorprese se il PSV sale",
-        "Attivazione e cambio fornitore gestiti da noi in negozio",
-        "Nessuna interruzione della fornitura"
+        "Quota fissa di vendita (QVF): 12,00 € al mese",
+        "Fatturazione bimestrale",
+        "Pagamento con addebito su conto corrente (anche di un'altra persona) o bollettino postale",
+        "Cambio fornitore gestito da noi, senza interruzioni della fornitura"
       ],
       "confronto_psv": true,
       "banner": "",
-      "nota": "Offerta per clienti domestici valida per sottoscrizioni entro il 30/09/2026. Il prezzo si riferisce alla sola componente materia prima gas ed è al netto di IVA e imposte; sono esclusi spesa per il trasporto e la gestione del contatore, oneri di sistema e quota fissa di commercializzazione. Condizioni complete e scheda sintetica disponibili in negozio."
+      "nota": "Offerta per clienti domestici con cambio fornitore, disponibile fino al 14/10/2026. Il prezzo si riferisce alla sola componente materia prima gas ed è al netto di IVA e imposte; sono esclusi spesa per il trasporto e la gestione del contatore e oneri di sistema. Quota fissa di vendita 12,00 €/mese. Il -30% confronta il prezzo fisso con la media del PSV di settembre 2026 (0,821 €/Smc), prezzo all'ingrosso della materia prima. Condizioni complete e scheda sintetica disponibili in negozio."
     }
   ]
 }
